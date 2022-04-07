@@ -1,0 +1,10 @@
+clc;
+close all;
+n=input('size of the window :');
+wc=input('cut off frequency :');
+h=firl(n-1,'wc/pi',boxcar(n));
+tf(h,l,l,'variable','z^-l');
+freqz(h);
+xlabel('frequency');
+ylabel('magnitude');
+title('fir filter');
