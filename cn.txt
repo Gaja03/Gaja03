@@ -1,0 +1,475 @@
+// BIT Stuffing program
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+void main()
+{
+int a[20],b[30],i,j,k,count,n;
+clrscr();
+printf("Enter frame length:");
+scanf("%d",&n);
+printf("Enter input frame (0's & 1's only):");
+for(i=0;i<n;i++)
+scanf("%d",&a[i]);
+i=0;
+count=1;
+j=0;
+while(i<n)
+{
+if(a[i]==1)
+{
+b[j]=a[i];
+for(k=i+1;a[k]==1 && k<n &&count<5;k++)
+{
+j++;
+b[j]=a[k];
+count++;
+if(count==5)
+{
+j++;
+b[j]=0;
+}
+i=k;
+}
+}
+else
+{
+b[j]=a[i];
+}
+i++;
+j++;
+}
+printf("After stuffing the frame is:");
+for(i=0;i<j;i++)
+printf("%d",b[i]);
+getch();
+}
+
+
+
+
+//PROGRAM FOR CHARACTER STUFFING
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<process.h>
+void main()
+{
+int i=0,j=0,n,pos;char a[20],b[50],ch;
+clrscr();
+printf("enter string\n");
+scanf("%s",&a);
+n=strlen(a);
+printf("enter position\n");
+scanf("%d",&pos);
+if(pos>n)
+{
+printf("invalid position, Enter again :");
+scanf("%d",&pos);
+}
+printf("enter the character\n");
+ch=getche();
+b[0]='d';
+b[1]='l';
+b[2]='e';
+b[3]='s';
+b[4]='t';
+b[5]='x';
+j=6;
+while(i<n)
+{
+if(i==pos-1)
+{
+b[j]='d';
+b[j+1]='l';
+b[j+2]='e';
+b[j+3]=ch;
+b[j+4]='d';
+b[j+5]='l';
+b[j+6]='e';
+j=j+7;
+}
+if(a[i]=='d' && a[i+1]=='l' && a[i+2]=='e')
+{
+b[j]='d';
+b[j+1]='l';
+b[j+2]='e';
+j=j+3;
+}
+b[j]=a[i];
+i++;
+j++;
+}
+b[j]='d';
+b[j+1]='l';
+b[j+2]='e';
+b[j+3]='e';
+b[j+4]='t';
+b[j+5]='x';
+b[j+6]='\0';
+printf("\nframe after stuffing:\n");
+printf("%s",b);
+getch();
+}
+
+2
+//PROGRAM FOR CYCLIC REDUNDENCY CHECK
+#include<stdio.h>
+#include<conio.h>
+int gen[4],genl,frl,rem[4];
+void main()
+{
+int i,j,fr[8],dupfr[11],recfr[11],tlen,flag;
+clrscr();
+frl=8;
+genl=4;
+printf("enter frame:");
+for(i=0;i<frl;i++)
+{
+scanf("%d",&fr[i]);
+dupfr[i]=fr[i];
+}
+printf("enter generator:");
+for(i=0;i<genl;i++)
+scanf("%d",&gen[i]);
+tlen=frl+genl-1;
+for(i=frl;i<tlen;i++)
+{
+dupfr[i]=0;
+}
+remainder(dupfr);
+for(i=0;i<frl;i++)
+{
+recfr[i]=fr[i];
+}
+for(i=frl,j=1;j<genl;i++,j++) {
+recfr[i]=rem[j]; }
+remainder(recfr);
+flag=0;
+for(i=0;i<4;i++) {
+if(rem[i]!=0)
+flag++; }
+if(flag==0) {
+printf("frame received correctly"); }Else {
+printf("the received frame is wrong"); }
+getch(); }
+remainder(int fr[]) {
+int k,k1,i,j;
+for(k=0;k<frl;k++) {
+if(fr[k]==1) {
+k1=k;
+for(i=0,j=k;i<genl;i++,j++) {
+rem[i]=fr[j]^gen[i]; }
+for(i=0;i<genl;i++) {
+fr[k1]=rem[i];
+k1++; }}}}
+
+
+3
+//.PROGRAM FOR FINDING SHORTEST PATH FOR A GIVEN GRAPH//
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+int path[5][5],i,j,min,a[5][5],p,st=1,ed=5,stp,edp,t[5],index;
+clrscr();
+printf("enter the cost matrix\n");
+for(i=1;i<=5;i++)
+for(j=1;j<=5;j++)
+scanf("%d",&a[i][j]);
+printf("enter the paths\n");
+scanf("%d",&p);
+printf("enter possible paths\n");
+for(i=1;i<=p;i++)
+for(j=1;j<=5;j++)
+scanf("%d",&path[i][j]);
+for(i=1;i<=p;i++)
+{
+t[i]=0;
+stp=st;
+for(j=1;j<=5;j++)
+{
+edp=path[i][j+1];
+t[i]=t[i]+a[stp][edp];
+if(edp==ed)
+break;
+else
+stp=edp;
+}
+}min=t[st];
+index=st;
+for(i=1;i<=p;i++)
+{
+if(min>t[i])
+{
+min=t[i];
+index=i;
+}
+}
+printf("minimum cost %d",min);
+printf("\n minimum cost path ");
+for(i=1;i<=5;i++)
+{
+printf("--> %d",path[index][i]);
+if(path[index][i]==ed)
+break;
+}
+getch();
+}
+
+4
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+unsigned dist[20];
+unsigned from[20];
+}rt[10];
+int main()
+{
+int dmat[20][20];
+int n,i,j,k,count=0;
+clrscr();
+printf("\nEnter the number of nodes : ");
+scanf("%d",&n);printf("Enter the cost matrix :\n");
+for(i=0;i<n;i++)
+for(j=0;j<n;j++)
+{
+scanf("%d",&dmat[i][j]);
+dmat[i][i]=0;
+rt[i].dist[j]=dmat[i][j];
+rt[i].from[j]=j;
+}
+Do
+{
+count=0;
+for(i=0;i<n;i++)
+for(j=0;j<n;j++)
+for(k=0;k<n;k++)
+if(rt[i].dist[j]>dmat[i][k]+rt[k].dist[j])
+{
+rt[i].dist[j]=rt[i].dist[k]+rt[k].dist[j];
+rt[i].from[j]=k;count++;
+}
+}while(count!=0);
+for(i=0;i<n;i++)
+{
+printf("\nState value for router %d is \n",i+1);
+for(j=0;j<n;j++)
+{
+printf("\nnode %d via %d Distance%d",j+1,rt[i].from[j]+1,rt[i].dist[j]);
+}
+}
+printf(“\n”);
+}
+
+5
+// Write a ‘c’ program for Broadcast tree from subnet of host
+#include<stdio.h>
+#include<conio.h>
+int p,q,u,v,n;
+int min=99,mincost=0;
+int t[50][2],i,j;
+int parent[50],edge[50][50];
+main()
+{
+clrscr();
+printf("\n Enter the number of nodes");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+printf("%c\t",65+i);
+parent[i]=-1;
+}
+printf("\n");
+for(i=0;i<n;i++)
+{
+printf("%c",65+i);
+for(j=0;j<n;j++)
+scanf("%d",&edge[i][j]);
+}
+for(i=0;i<n;i++)
+{
+for(j=0;j<n;j++)
+if(edge[i][j]!=99)
+if(min>edge[i][j])
+{
+min=edge[i][j];
+u=i;
+v=j;
+}
+p=find(u);
+q=find(v);
+if(p!=q)
+{
+
+6
+encrypting
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<string.h>
+void main()
+{
+int i,ch,lp;char cipher[50],plain[50];
+char key[50];
+clrscr();
+while(1)
+{
+printf("\n-----MENU-----\n");
+printf("\n1:Data Encryption\t\n\n2:Data Decryption\t\n\n3:Exit");
+printf("\n\nEnter your choice:");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:printf("\nData Encryption");
+printf("\nEnter the plain text:");
+fflush(stdin);
+gets(plain);
+printf("\nEnter the encryption key:");
+gets(key);
+lp=strlen(key);
+for(i=0;plain[i]!='\0';i++)
+cipher[i]=plain[i]^lp;
+cipher[i]='\0';
+printf("\nThe encrypted text is:");
+puts(cipher);
+break;
+case 2:
+printf("\nData decryption");
+for(i=0;cipher[i]!='\0';i++)
+plain[i]=cipher[i]^lp;
+printf("\nDecrypted text is:");
+puts(plain);
+break;
+case 3: exit(0);
+}
+}
+getch();
+}
+t[i][0]=u;
+t[i][1]=v;
+mincost=mincost+edge[u][v];
+sunion(p,q);
+}
+Else
+{
+t[i][0]=-1;t[i][1]=-1;
+}
+min=99;
+}
+printf("Minimum cost is %d\n Minimum spanning tree is\n" ,mincost);
+for(i=0;i<n;i++)
+if(t[i][0]!=-1 && t[i][1]!=-1)
+{
+printf("%c %c %d", 65+t[i][0],65+t[i][1],edge[t[i][0]][t[i][1]]);printf("\n");
+}
+getch();
+}
+sunion(int l,int m)
+{
+parent[l]=m;
+}
+find(int l)
+{
+if(parent[l]>0)
+i=parent[i];
+return i;
+}
+
+
+7
+decrypting des
+/*Write a program to break the above DES coding*/
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<ctype.h>
+void main()
+{
+char pwd[20];
+char alpha[26]="abcdefghijklmnopqrstuvwxyz";
+int num[20],i,n,key;
+clrscr();
+printf("\nEnter the password:");
+scanf("%s",&pwd);
+n=strlen(pwd);
+for(i=0;i<n;i++)
+num[i]=toascii(tolower(pwd[i]))-'a';
+printf("\nEnter the key:");
+scanf("%d",&key);
+for(i=0;i<n;i++)
+num[i]=(num[i]+key)%26;
+for(i=0;i<n;i++)
+pwd[i]=alpha[num[i]];
+printf("\nThe key is:%d",key);
+printf("\nEncrypted text is:%s",pwd);
+for(i=0;i<n;i++)
+{
+num[i]=(num[i]-key)%26;
+if(num[i]<0)
+num[i]=26+num[i];
+pwd[i]=alpha[num[i]];
+}
+printf("\nDecrypted text is:%s",pwd);
+getch();
+}
+
+8
+rsa
+/*Using RSA algorithm encrypt a text data and Decrypt the same*/
+#include<stdio.h>
+#include<conio.h>
+#include<ctype.h>
+#include<math.h>
+#include<string.h>
+void main()
+{
+int a,b,i,j,t,x,n,k=0,flag=0,prime[100];
+char m[20],pp[20];float p[20],c[20];
+double e,d;
+clrscr();
+for(i=0;i<50;i++)
+{
+flag=0;
+for(j=2;j<i/2;j++)
+if(i%j==0)
+{
+flag=1;break;
+}
+if(flag==0)
+prime[k++]=i;
+}
+a=prime[k-1];
+b=prime[k-2];
+n=a*b;
+t=(a-1)*(b-1);
+e=(double)prime[2];
+d=1/(float)e;
+printf("\nKey of encryption is:%lf\n",d);
+printf("\nEnter plain the text:");
+scanf("%s",&m);
+CN Lab Manual CSE Department ANRH
+24
+x=strlen(m);
+printf("\nDecryption status From Source to Destination:\n");
+printf("\nSource\t->----------------------------------<-destination\n");
+printf("\nChar\tnumeric\tcipher\t\tnumeric\t\tchar \n");
+printf("\n***********************************************************\n");
+printf("\n");
+for(i=0;i<x;i++)
+{
+printf("%c",m[i]);
+printf("\t%d",m[i]-97);
+c[i]=pow(m[i]-97,(float)e);
+c[i]=fmod(c[i],(float)n);
+printf("\t%f",c[i]);
+p[i]=pow(c[i],(float)d);
+p[i]=fmod(p[i],(float)n);
+printf("\t%f",p[i]);pp[i]=p[i]+97;
+printf("\t%c\n",pp[i]);
+printf("\n***********************************************************\n");
+printf("\n");
+}
+getch();
+}
